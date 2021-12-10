@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="./css/bootstrap.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/index.css">
+  </head>
+
+  <body>
+    <div class="container" id="app" style="width: 400px; font-size: 14px;">
+      <div>通过 公司/家庭 sip 线路拨打网页中号码</div>
+      <form style="margin-top: 20px; margin-bottom: 20px;">
+        <div class="form-group">
+          <label for="server" class="col-form-label-sm">服务器地址</label>
+          <input type="email" class="form-control form-control-sm" id="server" aria-describedby="serverHelp" placeholder="http://xx.xx.xx.xx" v-model="server">
+          <small id="serverHelp" class="form-text text-muted">只支持 <a href="https://www.zycoo.com/">zycoo coocenter 系列产品</a> </small>
+        </div>
+        <div class="form-group">
+          <label for="myExtension"  class="col-form-label-sm">我的分机号</label>
+          <input type="password" class="form-control form-control-sm" id="myExtension" placeholder="Password" v-model="myExtension">
+        </div>
+        <button type="submit" class="btn btn-primary btn-sm" @click="saveSetting">提交</button>
+      </form>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script src="./index.js"></script>
+  </body>
+</html>
