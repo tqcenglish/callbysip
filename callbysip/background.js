@@ -34,27 +34,39 @@ chrome.contextMenus.onClicked.addListener(function (itemData) {
   switch (itemData.menuItemId) {
     case '拨打': {
       let number = itemData.selectionText;
-      let url = `https://192.168.11.66:8080/coocenter-api/plugin-asterisk/extension/click-number`;
-      let myExtension = '710'
+      chrome.storage.local.get(['server', 'myExtension'], result => {
+        if (!result.server){
+          alert("缺失服务器, 请配置,再使用")
+          return
+        }
 
-      // let formData = new FormData();
-      // formData.append('dst', number);
-      // formData.append('src', myExtension);
-      // formData.append('limitSec', 99);
-      
-      // application/x-www-form-urlencoded
-      let formData =  new URLSearchParams({
-        'dst': number,
-        'src': myExtension,
-        'limitSec': 99
-      })
+        if (!result.myExtension) {
+          alert("缺失分机, 请配置,再使用")
+          return
+        }
 
-      fetch(url, {
-        body: formData,
-        method: "post"
-      }).then(r => r.text()).then(result => {
-        console.log(result)
-      })
+        let url = `${result.server}/coocenter-api/plugin-asterisk/extension/click-number`;
+        let myExtension = result.myExtension
+  
+        // let formData = new FormData();
+        // formData.append('dst', number);
+        // formData.append('src', myExtension);
+        // formData.append('limitSec', 99);
+        
+        // application/x-www-form-urlencoded
+        let formData =  new URLSearchParams({
+          'dst': number,
+          'src': myExtension,
+          'limitSec': 99
+        })
+  
+        fetch(url, {
+          body: formData,
+          method: "post"
+        }).then(r => r.text()).then(result => {
+          console.log(result)
+        })
+      });
     }
   }
 });
